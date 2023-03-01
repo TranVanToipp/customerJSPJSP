@@ -1,3 +1,5 @@
+req.getParameter("lblCustomerID");
+
 package fjs.cs.action;
 
 import java.io.IOException;
