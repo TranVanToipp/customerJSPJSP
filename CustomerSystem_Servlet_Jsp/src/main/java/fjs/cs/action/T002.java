@@ -132,6 +132,33 @@ public static int save(T003Dto save) throws SQLException {
 		return status;
 		
 	}
+	
+	
+	
+	public static int save(T003Dto save) throws SQLException {
+int status = 0;
+Connection conn = null;
+try {
+String query = "INSERT INTO mstcustomer (Customer_Id, Customer_Name, Sex, Birthday, Email, Address, Delete_YMD, Insert_Ymd, Insert_Psn_Cd, Update_YMD, Update_Psn_Cd) VALUES (SEQ_CUSTOMER_ID.NEXTVAL, ?, ?, ?, ?, ?, NULL, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)";
+conn = new DBConnection().getConnection();
+PreparedStatement ps = conn.prepareStatement(query);
+ps.setString(1, save.getCUSTOMER_NAME());
+ps.setString(2, save.getSEX());
+ps.setString(3, save.getBIRTHDAY());
+ps.setString(4, save.getEMAIL());
+ps.setString(5, save.getADDRESS());
+ps.setString(6, save.getINSERT_PSN_CD());
+ps.setString(7, save.getUPDATE_PSN_CD());
+status = ps.executeUpdate();
+} catch (Exception e) {
+e.printStackTrace();
+} finally {
+if (conn != null) {
+conn.close();
+}
+}
+return status;
+}
 	 */
 	
 	/**
