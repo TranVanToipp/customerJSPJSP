@@ -117,6 +117,21 @@ public class T002 extends HttpServlet {
 	 * INSERT INTO mstcustomer (Customer_Id, Customer_Name, Sex, Birthday, Email, Address, Delete_YMD, Insert_Ymd, Insert_Psn_Cd, Update_YMD, Update_Psn_Cd) 
 	   VALUES (SEQ_CUSTOMER_ID.NEXTVAL, 'Customer_Name_Value', 'Sex_Value', 'Birthday_Value', 'Email_Value', 'Address_Value', NULL, CURRENT_TIMESTAMP, 'Insert_Psn_Cd_Value', CURRENT_TIMESTAMP, 'Update_Psn_Cd_Value');
 
+
+public static int save(T003Dto save) throws SQLException {
+		int status = 0;
+		Connection conn = null;
+		try {
+			String query = "";
+			conn = new DBConnection().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return status;
+		
+	}
 	 */
 	
 	/**
