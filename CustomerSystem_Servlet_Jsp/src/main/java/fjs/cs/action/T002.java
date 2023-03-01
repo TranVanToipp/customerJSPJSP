@@ -1,3 +1,77 @@
+
+protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			String id = req.getParameter("userId");
+			String name = req.getParameter("txtCustomerName");
+			String sex = req.getParameter("cboSex");
+			String birthday = req.getParameter("txtCustomerBirthday");
+			String email = req.getParameter("txtCustomerEmail");
+			String address = req.getParameter("txaAddress");
+			T003Dto dto = new T003Dto();
+	        dto.setCUSTOMER_ID(Integer.parseInt(id));
+	        dto.setCUSTOMER_NAME(name);
+	        dto.setSEX(sex);
+	        dto.setBIRTHDAY(birthday);
+	        dto.setEMAIL(email);
+	        dto.setADDRESS(address);
+	        HttpSession session = req.getSession();
+	        T003Dao dao = new T003Dao();
+	        int status = dao.update(dto, session);
+	        if (status > 0) {
+	            // cập nhật thành công, chuyển hướng về trang thông báo thành công
+	            resp.sendRedirect("/CustomerSystem/T002");
+	        } else {
+	            // cập nhật không thành công, chuyển hướng về trang thông báo lỗi
+	            resp.sendRedirect("error.jsp");
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+public static int save(T003Dto save, HttpSession session) throws SQLException {
+		int status = 0;
+		Connection conn = null;
+		try {
+			String query = "INSERT INTO MSTCUSTOMER (CUSTOMER_ID, CUSTOMER_NAME, SEX, BIRTHDAY, EMAIL, ADDRESS, DELETE_YMD, INSERT_YMD, INSERT_PSN_CD, UPDATE_YMD, UPDATE_PSN_CD) \r\n" + 
+					"VALUES (NEXT VALUE FOR SEQ_CUSTOMER_ID, ?, ?, ?, ?, ?, NULL, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)";
+			conn = new DBConnection().getConnection();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, save.getCUSTOMER_NAME());
+			ps.setString(2, save.getSEX());
+			ps.setString(3, save.getBIRTHDAY());
+			ps.setString(4, save.getEMAIL());
+			ps.setString(5, save.getADDRESS());
+			ps.setString(6, (String) session.getAttribute("psnCd"));
+			ps.setString(7, (String) session.getAttribute("psnCd"));
+			status = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return status;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <label for="username">Tên đăng nhập:</label>
 <input type="text" id="username" name="username" value="${param.username}">
 
