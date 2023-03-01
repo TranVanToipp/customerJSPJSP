@@ -1,3 +1,7 @@
+<label for="username">Tên đăng nhập:</label>
+<input type="text" id="username" name="username" value="${param.username}">
+
+
 req.getParameter("lblCustomerID");
 
 package fjs.cs.action;
